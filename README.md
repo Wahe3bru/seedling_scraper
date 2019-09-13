@@ -11,11 +11,11 @@ I am still building and preparing my backyard for growing my own vegetables and 
 I want my kids to grow up eating [green zebra tomatoes](https://livingseeds.co.za/green-zebra-tomato.html) and pick a [kaleidoscope](https://livingseeds.co.za/swiss-chard-kaleidoscope.html) of swiss chard and _know that what is on offer is not __only__ what is available_
 
 ### The plan
-[x] scrape the seedling page
-[ ] save the data
-[ ] notify if changes to seedling offering
-   [ ] email
-   [ ] telegram bot
+- [x] scrape the seedling page
+- [ ] save the data
+- [ ] notify if changes to seedling offering
+  - [ ] email
+  - [ ] telegram bot
 
 optional further development:
 - display catalogue of available seedlings currently
