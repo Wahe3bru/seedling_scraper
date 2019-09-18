@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -11,9 +12,20 @@ descr_li = []
 price_li = []
 pic_li = []
 
-# windows pc
+
+# windows
+chrome_driver_path = Path('C:/Users/WaheebA/Documents/work/learnings/webscraping/chromedriver.exe')
+# mac
+# chrome_driver_path = Path()
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.headless = True
+driver = webdriver.Chrome(executable_path=str(chrome_driver_path), options=chrome_options)
+
+# old way deprecated
 # driver = webdriver.PhantomJS(executable_path=r'C:\Users\WaheebA\Documents\work\learnings\webscraping\webscraping_book\phantomjs-2.1.1-windows\bin\phantomjs')
-driver = webdriver.PhantomJS(executable_path='/Users/wahe3bru/Documents/phantomjs-2.1.1-macosx/bin/phantomjs')
+#driver = webdriver.PhantomJS(executable_path='/Users/wahe3bru/Documents/phantomjs-2.1.1-macosx/bin/phantomjs')
+
 driver.get('https://livingseeds.co.za/heirloom-seedlings')
 
 pageSource = driver.page_source
@@ -48,6 +60,6 @@ plants_dic['pic_url'] = pic_li
 
 
 seedling_df = pd.DataFrame.from_dict(plants_dic)
-seedling_df['price'] = seedling_df.price.apply(lambda s: re.findall(r'^(R\d{1,2}\.\d\d)',s)[0])
-seedling_df['description'] = seedling_df.description.str.replace('\\n\\n','').str.replace('Seedling','')
+seedling_df['price'] = seedling_df.price.apply(lambda s: re.findall(r'^(R\d{1,2}\.\d{2})',s)[0])
+seedling_df['description'] = seedling_df.description.str.replace('\\n{1,2}','').str.replace('Seedling','')
 print(seedling_df)
