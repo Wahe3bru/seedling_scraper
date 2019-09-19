@@ -71,7 +71,8 @@ chrome_driver_path = Path('C:/Users/WaheebA/Documents/work/learnings/webscraping
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.headless = True
-driver = webdriver.Chrome(executable_path=str(chrome_driver_path), options=chrome_options)
+driver = webdriver.Chrome(executable_path=str(chrome_driver_path),
+                          options=chrome_options)
 
 driver.get('https://livingseeds.co.za/heirloom-seedlings')
 
@@ -86,7 +87,8 @@ while next_page:
             name = plant.h4.get_text()
             description = plant.p.get_text()
             price = plant.find('p',{'class': 'price'}).get_text().strip()
-            plant_pic = plant.parent.parent.find('div', {'class': 'image'}).find(src=True)['src']
+            plant_pic = plant.parent.parent.find('div', {'class': 'image'}
+                                                ).find(src=True)['src']
 
             name_li.append(name)
             descr_li.append(description)
@@ -105,23 +107,25 @@ while next_page:
 # plants_dic['pic_url'] = pic_li
 
 # clean description
-descr_li_clean = [ d.replace('Seedling', '').replace('\n', '') for d in descr_li] # .replace('\\n{1,2}', '')
+descr_li_clean = [d.replace('Seedling', '').replace('\n', '') for d in descr_li]
 # extract price
 sale_price = [re.findall(r'^(R\d{1,2}\.\d{2})', price)[0] for price in price_li]
 # populate table
 # insert into seedlings table
 print('updating seedlings table')
 for i in range(len(name_li)):
-    c.execute("INSERT INTO seedlings (name, description, price, img_url) VALUES (?, ?, ?, ?)",
-             (name_li[i], descr_li_clean[i], sale_price[i], pic_li[i]))
+    c.execute("INSERT INTO seedlings (name, description, price, img_url) \
+              VALUES (?, ?, ?, ?)",
+              (name_li[i], descr_li_clean[i], sale_price[i], pic_li[i]))
 # get data ready for  table insert format
 c.execute("SELECT plant_id, name FROM seedlings")
 rows = c.fetchall()
 id_name_dict = dict(rows)
 plant_id_date = list(((d, str(todays_date)) for d in list(id_name_dict.keys())))
 # insert into availability_dates tables
-c.executemany("INSERT INTO availability_dates (plant_id, available_date) VALUES (?, ?)",
-          plant_id_date)
+c.executemany("INSERT INTO availability_dates (plant_id, available_date) \
+               VALUES (?, ?)",
+               plant_id_date)
 print('updating availability_dates table')
 conn.commit()
 conn.close()
