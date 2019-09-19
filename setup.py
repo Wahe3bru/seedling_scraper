@@ -111,6 +111,13 @@ for i in range(len(name_li)):
     c.execute("INSERT INTO seedlings (name, description, price, img_url) VALUES (?, ?, ?, ?)",
              (name_li[i], descr_li_clean[i], sale_price[i], pic_li[i]))
 # get data ready for  table insert format
+c.execute("SELECT plant_id, name FROM seedlings")
+rows = c.fetchall()
+id_name_dict = dict(rows)
+plant_id_date = list(((d, str(todays_date)) for d in list(id_name_dict.keys())))
 # insert into availability_dates tables
+c.executemany("INSERT INTO availability_dates (plant_id, available_date) VALUES (?, ?)",
+          plant_id_date)
+
 conn.commit()
 conn.close()
