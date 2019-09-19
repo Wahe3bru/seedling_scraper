@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS seedlings(
     img_url TEXT
 );"""
 c.execute(create_seedlings_table)
+print('created seedlings table')
 
 # Create availability table
 create_availability_date = """
@@ -43,8 +44,10 @@ CREATE TABLE IF NOT EXISTS availability_dates(
     FOREIGN KEY (plant_id) REFERENCES seedlings (plant_id)
 );"""
 c.execute(create_availability_date)
+print('created availability_dates table')
 
 # scrape website
+print('scraping data...')
 import re
 from datetime import datetime
 from pathlib import Path
@@ -107,6 +110,7 @@ descr_li_clean = [ d.replace('Seedling', '').replace('\n', '') for d in descr_li
 sale_price = [re.findall(r'^(R\d{1,2}\.\d{2})', price)[0] for price in price_li]
 # populate table
 # insert into seedlings table
+print('updating seedlings table')
 for i in range(len(name_li)):
     c.execute("INSERT INTO seedlings (name, description, price, img_url) VALUES (?, ?, ?, ?)",
              (name_li[i], descr_li_clean[i], sale_price[i], pic_li[i]))
@@ -118,6 +122,6 @@ plant_id_date = list(((d, str(todays_date)) for d in list(id_name_dict.keys())))
 # insert into availability_dates tables
 c.executemany("INSERT INTO availability_dates (plant_id, available_date) VALUES (?, ?)",
           plant_id_date)
-
+print('updating availability_dates table')
 conn.commit()
 conn.close()
