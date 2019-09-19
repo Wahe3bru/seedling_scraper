@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -12,7 +13,7 @@ descr_li = []
 price_li = []
 pic_li = []
 
-
+todays_date =  datetime.today().date()
 # windows
 chrome_driver_path = Path('C:/Users/WaheebA/Documents/work/learnings/webscraping/chromedriver.exe')
 # mac
@@ -57,7 +58,6 @@ plants_dic['seedling'] = name_li
 plants_dic['description'] = descr_li
 plants_dic['price'] = price_li
 plants_dic['pic_url'] = pic_li
-
 
 seedling_df = pd.DataFrame.from_dict(plants_dic)
 seedling_df['price'] = seedling_df.price.apply(lambda s: re.findall(r'^(R\d{1,2}\.\d{2})',s)[0])
