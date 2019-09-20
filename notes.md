@@ -24,3 +24,9 @@ SQL statements must end in `;`
   </div>
 
 </div>
+
+
+### pytests
+test_create_connection
+- normal connection
+- incorrect file path
