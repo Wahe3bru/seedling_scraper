@@ -47,7 +47,33 @@ if len(new_plant_index):
     # similar for description, price and img_url
     new_seedlings = True # flag
     <function to notify of new seedlings>
-    
+
 then insert new seedling_data into seedlings table <insert into table function>
 
 then insert name and date into availability_dates table <a function>
+
+---
+c.execute("SELECT plant_id, name FROM seedlings")
+rows = c.fetchall()
+id_name_dict = dict(rows)
+id_name_dict
+
+name_id_dict = {v: k for k, v in id_name_dict.items()}
+name_id_dict
+
+plant_ids = []
+for name in name_li:
+    if name in name_id_dict:
+        plant_ids.append(name_id_dict[name])
+plant_ids
+
+todays_date =  datetime.today().date()
+
+plant_id_date = list(((d, str(todays_date)) for d in plant_ids))
+
+c.executemany("INSERT INTO availability_dates (plant_id, available_date) \
+               VALUES (?, ?)",
+               plant_id_date)
+print('updating availability_dates table')
+conn.commit()
+conn.close()
