@@ -83,9 +83,7 @@ def update_availability_dates_table(conn, new_plant_index):
     plant_id_date = list(((d, str(todays_date)) for d in new_plant_index))
 
     c = conn.cursor()
-    c.executemany("INSERT INTO availability_dates (plant_id, available_date) \
-                        VALUES (?, ?)",
-                        plant_id_date)
+    c.executemany("INSERT INTO availability_dates VALUES (?, ?)", plant_id_date)
 
 
 def update_seedlings_table(conn, name_li, descr_li, sale_price, pic_li):
@@ -100,6 +98,5 @@ def update_seedlings_table(conn, name_li, descr_li, sale_price, pic_li):
     """
     c = conn.cursor()
     for i in range(len(name_li)):
-        c.execute("INSERT INTO seedlings (name, description, price, img_url) \
-                  VALUES (?, ?, ?, ?)",
+        c.execute("INSERT INTO seedlings VALUES (?, ?, ?, ?)",
                   (name_li[i], descr_li[i], sale_price[i], pic_li[i]))
