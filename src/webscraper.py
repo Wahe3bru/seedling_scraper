@@ -77,7 +77,7 @@ price_li = [re.findall(r'^(R\d{1,2}\.\d{2})', price)[0] for price in price_li]
 # end webscraping
 
 # update db
-db_file = database = Path.cwd() / 'data' / 'seedlings.db'
+db_file = Path.cwd() / 'data' / 'seedlings.db'
 
 conn = db.create_connection(db_file)
 c = conn.cursor()
@@ -129,7 +129,7 @@ if new_plants_idx:
     # <function to notify of new seedlings>
     bot_msg_seedling_list = '\n'.join(name_li)
     bot_message = f'There are new seedling/s available!\nThey are:\nbot_msg_seedling_list'
-    bot_sendtext()
+    bot_sendtext(bot_message)
 
     # insert new seedlings into db.seedlings
     db.update_seedlings_table(conn, new_name_li, new_description, new_price,
