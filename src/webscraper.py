@@ -1,10 +1,9 @@
 import re
-from datetime import datetime
 from pathlib import Path
 
 from bs4 import BeautifulSoup
-import pandas as pd
 from selenium import webdriver
+import requests
 
 import db_helper as db
 
@@ -22,7 +21,17 @@ chrome_driver_path = Path('C:/Users/WaheebA/Documents/work/learnings/webscraping
 url = 'https://livingseeds.co.za/heirloom-seedlings'
 
 
-def connect_and_get_source(url, chrome_driver_path):
+def bot_sendtext(bot_message):
+
+    # Send text message
+    bot_token = '802958449:AAGwKHen8uwY2bfaoqZ0i5cA9h_ioVUyLhg'
+    bot_chatID = '61875012'
+    send_text = f'https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={bot_chatID}&parse_mode=Markdown&text={bot_message}'
+
+    requests.get(send_text)
+
+
+def connect_url_and_get_source(url, chrome_driver_path):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.headless = True
     driver = webdriver.Chrome(executable_path=str(chrome_driver_path),
@@ -32,7 +41,7 @@ def connect_and_get_source(url, chrome_driver_path):
     return driver.page_source
 
 
-pageSource = connect_and_get_source(url, chrome_driver_path)
+pageSource = connect_url_and_get_source(url, chrome_driver_path)
 bs = BeautifulSoup(pageSource, 'html.parser')
 
 next_page = 1
@@ -56,7 +65,7 @@ while next_page:
         # driver.get(next_page.find(href=True)['href'])
         next_url = next_page.find(href=True)['href']
         # pageSource = driver.page_source
-        pageSource = connect_and_get_source(next_url, chrome_driver_path)
+        pageSource = connect_url_and_get_source(next_url, chrome_driver_path)
         bs = BeautifulSoup(pageSource, 'html.parser')
         print(next_page)
 
@@ -116,8 +125,11 @@ if new_plants_idx:
     new_price = [price for price in price_li
                  if price_li.incex(price) in new_plants_idx]
     new_img_url = [img for img in pic_li if pic_li.index(img) in new_plants_idx]
-    new_seedlings = True  # flag
+    # new_seedlings = True  # flag
     # <function to notify of new seedlings>
+    bot_msg_seedling_list = '\n'.join(name_li)
+    bot_message = f'There are new seedling/s available!\nThey are:\nbot_msg_seedling_list'
+    bot_sendtext()
 
     # insert new seedlings into db.seedlings
     db.update_seedlings_table(conn, new_name_li, new_description, new_price,
