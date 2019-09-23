@@ -85,3 +85,19 @@ c.executemany("INSERT INTO availability_dates (plant_id, available_date) \
 print('updating availability_dates table')
 conn.commit()
 conn.close()
+
+
+### Notification
+#### Telegram
+sending a message with Telegram accepts markdown, so can therefore embed picture of seedling with name.
+as a picture will be more beneficial.
+example:
+``` python
+bot_sendtext("""__The following seedlings are available:__
+[Seedling Applegreen Eggplant R7.85](https://livingseeds.co.za/image-smp/seedling-applegreen-eggplantseedlings_10339_220x220.jpg)
+""")
+```
+So I need to create template message to display seedling name, picture and price.
+it seems the only one pic (the first) shows up, as telegram automatically shows a preview of the first link.
+- so i can send a message for each seedling available
+- create a table of img, name and price. figure out how to send message as markdown or maybe html
