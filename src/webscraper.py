@@ -78,8 +78,9 @@ price_li = [re.findall(r'^(R\d{1,2}\.\d{2})', price)[0] for price in price_li]
 
 # update db
 db_file = Path.cwd() / 'data' / 'seedlings.db'
+db_file_string = str(db_file)
 
-conn = db.create_connection(db_file)
+conn = db.create_connection(db_file_string)
 c = conn.cursor()
 id_name_dict = db.id_names_from_db(conn)
 
