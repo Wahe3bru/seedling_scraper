@@ -30,6 +30,14 @@ SQL statements must end in `;`
 test_create_connection
 - normal connection
 - incorrect file path
+- path must be string
+
+get_plant_id(id_name_dict, name_li)
+- check if list of plant_id corresponds to name
+- returns empty list if name_li not it id_name_dict
+
+new_plant(known_seedlings, name_li)
+- no new plant data known_seedlings.values == name_li
 
 ##### Thinking out loud
 known_seedlings -> list containing seedling names that are in seedlings tables
