@@ -28,7 +28,7 @@ def bot_sendtext(bot_message):
     bot_chatID = '61875012'
     send_text = f'https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={bot_chatID}&parse_mode=Markdown&text={bot_message}'
 
-    requests.get(send_text)
+    requests.post(send_text)
 
 
 def connect_url_and_get_source(url, chrome_driver_path):
