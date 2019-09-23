@@ -127,10 +127,13 @@ if new_plants_idx:
                  if price_li.incex(price) in new_plants_idx]
     new_img_url = [img for img in pic_li if pic_li.index(img) in new_plants_idx]
     # new_seedlings = True  # flag
-    # <function to notify of new seedlings>
-    bot_msg_seedling_list = '\n'.join(name_li)
-    bot_message = f'There are new seedling/s available!\nThey are:\nbot_msg_seedling_list'
+    # notify of new seedlings | this is a hack! research better way.
+    bot_message = 'There are new seedling/s available!'
     bot_sendtext(bot_message)
+    for i in range(len(new_name_li)):
+        seedling_msg = f'{new_name_li[i]} [{new_price[i]}]({new_img_url[i]})'
+        bot_sendtext(seedling_msg)
+
 
     # insert new seedlings into db.seedlings
     db.update_seedlings_table(conn, new_name_li, new_description, new_price,
