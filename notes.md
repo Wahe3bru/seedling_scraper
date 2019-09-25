@@ -1,14 +1,20 @@
 # Notes
+1. install necessary chromedriver on mac
+1. refactor script and functions
+1. setup raspi to run selenium headless
+1. refactor scripts to run on raspi
+1. schedule cronjob
+1. research lambda host static website
 
 ### sqlite3
-`.open <db name>`
+`.open <db name>` or at terminal `$ sqlite3 <db name>`
 `.tables` - view tables
 `.schema <table name>` - view schema of table
 SQL statements must end in `;`
 `.q` - quit sqlite3
 
 
-
+do I bother creating a webpage? maybe as an exercise in AWS lambda.
 ##### display data as cards using bootstrap
 
 <div class="card-group">
@@ -38,6 +44,8 @@ get_plant_id(id_name_dict, name_li)
 
 new_plant(known_seedlings, name_li)
 - no new plant data known_seedlings.values == name_li
+
+- need to mock db connection and data
 
 ##### Thinking out loud
 known_seedlings -> list containing seedling names that are in seedlings tables
