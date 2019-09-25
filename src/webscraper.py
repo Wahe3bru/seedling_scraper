@@ -24,8 +24,8 @@ url = 'https://livingseeds.co.za/heirloom-seedlings'
 def bot_sendtext(bot_message):
 
     # Send text message
-    bot_token = '802958449:AAGwKHen8uwY2bfaoqZ0i5cA9h_ioVUyLhg'
-    bot_chatID = '61875012'
+    bot_token = '802958449:AAGwKHen8uwY2bfaoqZ0i5cA9h_ioVUyLhgh-temp'
+    bot_chatID = '61875012h-temp'
     send_text = f'https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={bot_chatID}&parse_mode=Markdown&text={bot_message}'
 
     requests.post(send_text)
